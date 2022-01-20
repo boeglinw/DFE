@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file 'dfe_main_window.ui'
 #
-# Created by: PyQt5 UI code generator 5.9.2
+# Created by: PyQt5 UI code generator 5.12.3
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -64,6 +66,8 @@ class Ui_MainWindow(object):
         self.actionSave_As.setObjectName("actionSave_As")
         self.actionDuplicate_Row = QtWidgets.QAction(MainWindow)
         self.actionDuplicate_Row.setObjectName("actionDuplicate_Row")
+        self.action_Edit_Header_Comments = QtWidgets.QAction(MainWindow)
+        self.action_Edit_Header_Comments.setObjectName("action_Edit_Header_Comments")
         self.menuFile.addAction(self.actionOpen)
         self.menuFile.addAction(self.actionNew)
         self.menuFile.addAction(self.actionSave)
@@ -71,6 +75,7 @@ class Ui_MainWindow(object):
         self.menuFile.addAction(self.actionQuit)
         self.menuEdit.addAction(self.action_Edit_Parameters)
         self.menuEdit.addAction(self.action_Edit_Headers)
+        self.menuEdit.addAction(self.action_Edit_Header_Comments)
         self.menuRows.addAction(self.actionInsert_Row_Above)
         self.menuRows.addAction(self.actionInsert_Row_Below)
         self.menuRows.addAction(self.actionDuplicate_Row)
@@ -109,4 +114,4 @@ class Ui_MainWindow(object):
         self.actionRemove_Columns.setText(_translate("MainWindow", "Remove Column(s)"))
         self.actionSave_As.setText(_translate("MainWindow", "Save As"))
         self.actionDuplicate_Row.setText(_translate("MainWindow", "Duplicate "))
-
+        self.action_Edit_Header_Comments.setText(_translate("MainWindow", "Header Comments"))

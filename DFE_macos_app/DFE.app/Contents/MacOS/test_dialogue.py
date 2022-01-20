@@ -18,7 +18,11 @@ from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow, QPushButton
 
 #from header_dialog import HeaderDialog
 
-from new_dialog import NewDialog 
+#from new_dialog import NewDialog
+
+from comment_dialog import CommentDialog 
+
+TestDialog = CommentDialog
 
 class Window(QMainWindow):
     """Main window."""
@@ -37,12 +41,12 @@ class Window(QMainWindow):
         #dlg = ParameterDialog()
         #dlg = HeaderDialog()
         #dlg = VariableDialog()
-        dlg = NewDialog()
+        dlg = TestDialog(lines = ['Hello There', 'how are you?'])
         dlg.exec()
         # get values
-        print('result = ', dlg.result() )
-        print('values = ', dlg.get_values())
-        
+        #print('result = ', dlg.result() )
+        #print('values = ', dlg.get_values())
+        print('final text = ', dlg.lines)
         
 if __name__ == "__main__":
     # Create the application
