@@ -49,6 +49,7 @@
     </property>
     <addaction name="action_Edit_Parameters"/>
     <addaction name="action_Edit_Headers"/>
+    <addaction name="action_Edit_Header_Comments"/>
    </widget>
    <widget class="QMenu" name="menuRows">
     <property name="title">
@@ -143,6 +144,11 @@
   <action name="actionDuplicate_Row">
    <property name="text">
     <string>Duplicate </string>
+   </property>
+  </action>
+  <action name="action_Edit_Header_Comments">
+   <property name="text">
+    <string>Header Comments</string>
    </property>
   </action>
  </widget>

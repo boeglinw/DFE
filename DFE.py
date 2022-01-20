@@ -1,5 +1,7 @@
 # compile ui files using e.g. pyuic5 dfe_main_window.ui -o dfe_main_window.py 
 
+# new LabTools version >= 1.1.3.7 needed
+
 
 import sys
 import os
@@ -15,6 +17,7 @@ from variable_dialog import VariableDialog
 from parameter_dialog import ParameterDialog
 from header_dialog import HeaderDialog 
 from new_dialog import NewDialog
+from comment_dialog import CommentDialog 
 
 # formats
 fmt_conv_dict = {'f':float, 's':lambda x: x, 'i':int}
@@ -33,6 +36,14 @@ class datafileTableModel(qtc.QAbstractTableModel):
             except:
                 print(f'cannot open: {data_file}')
                 return
+            # store comments
+            self._comments = []
+            self._header_comments = []
+            for i in self.df.adata_comment_index:
+                hl = self.df.adata[i][1:].strip()
+                self._comments.append(hl)
+                if i<self.df.headindex:
+                    self._header_comments.append(hl)
             if (hasattr(self.df, "par")) and (self.df.par is not None):
                     # there are parameter data
                     self._parameter_names = self.df.par.get_variable_names()
@@ -46,6 +57,8 @@ class datafileTableModel(qtc.QAbstractTableModel):
             self._data = (self.df.get_data_list(':'.join( self.df.keys[:-1]))).tolist()
         else:
             # no filename given
+            self._comments = []
+            self._header_comments = []
             self.filename = 'new_file.data'
             self._headers = header_data
             self._formats = formats_data
@@ -144,7 +157,11 @@ class datafileTableModel(qtc.QAbstractTableModel):
     def save_data(self, new_file):
 
         with open(new_file, 'w', encoding='utf-8') as fh:
-            # write parameters if anu
+            # write header comments if any
+            for hc in self._header_comments:
+                hc_l = f'# {hc}\n'
+                fh.write(hc_l)            
+            # write parameters if any
             for i, p_name in enumerate(self._parameter_names):
                 p_l = f'#\\ {p_name} = {self._parameter_values[i]}\n'
                 fh.write(p_l)
@@ -254,6 +271,10 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
         
         # edit headers menu
         self.action_Edit_Headers.triggered.connect(self.edit_headers)
+            
+        # edit header comments            
+        self.action_Edit_Header_Comments.triggered.connect(self.edit_header_comments)
+        
         # End main UI code
         self.show()
         self.current_dir = os.path.expanduser("~")  # initialize to home directory
@@ -406,6 +427,15 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
             types = dlg.get_types()
             new_header = dict(zip(names, types))
             self.model.set_headers(new_header)
+            
+    def edit_header_comments(self):
+        dlg = CommentDialog(lines = self.model._header_comments)
+        dlg.exec()
+        if dlg.result():
+            self.model._header_comments = dlg.lines
+
+
+    
 
 #%%
 if __name__ == '__main__':
