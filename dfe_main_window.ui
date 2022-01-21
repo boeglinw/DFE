@@ -70,10 +70,17 @@
     <addaction name="separator"/>
     <addaction name="actionRemove_Columns"/>
    </widget>
+   <widget class="QMenu" name="menuOptions">
+    <property name="title">
+     <string>Options</string>
+    </property>
+    <addaction name="actionFloat_Display"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuRows"/>
    <addaction name="menuColumns"/>
+   <addaction name="menuOptions"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionOpen">
@@ -149,6 +156,11 @@
   <action name="action_Edit_Header_Comments">
    <property name="text">
     <string>Header Comments</string>
+   </property>
+  </action>
+  <action name="actionFloat_Display">
+   <property name="text">
+    <string>Float Display</string>
    </property>
   </action>
  </widget>

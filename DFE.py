@@ -18,17 +18,33 @@ from parameter_dialog import ParameterDialog
 from header_dialog import HeaderDialog 
 from new_dialog import NewDialog
 from comment_dialog import CommentDialog 
+from float_display_dialog import FloatDisplayDialog
 
-# formats
-fmt_conv_dict = {'f':float, 's':lambda x: x, 'i':int}
+
 
 # default values
+
+def get_fmt(fmt, prec, float_format = 'f'):
+    # create formatting string for table entries
+    if fmt == 'f':
+        # float format
+        fmt = '{0:' + f'.{prec}' + f'{float_format}' + '}'
+    elif fmt == 'i':
+        fmt = '{0:d}'
+    else:
+        fmt = '{0}'
+    return fmt
 
 class datafileTableModel(qtc.QAbstractTableModel):
     """ The model for the datafile """
     def __init__(self, data_file , header_data = [], formats_data = {}, table_data = []): 
         super().__init__() 
         # filename given
+        self.float_fmt = 'f'
+        self.prec = 3
+        # formats
+        self.fmt_conv_dict = {'f':float, 's':lambda x: x, 'i':int}
+        
         if data_file != '':
             self.filename = data_file
             try:
@@ -65,7 +81,22 @@ class datafileTableModel(qtc.QAbstractTableModel):
             self._data = table_data
             self._parameter_names = ['']
             self._parameter_values = ['']
-
+            
+    def get_prec(self, fmt):
+        # get precision for format fmt
+        if fmt == 'f':
+            return self.prec
+        else:
+            return ''
+        
+    def get_number_str(self, val, fmt):
+        # get string representation for val in format fmt
+        str_rep = get_fmt(fmt, self.get_prec(fmt), float_format = self.float_fmt )
+        value = self.fmt_conv_dict[fmt](val)
+        val_str = str_rep.format(value)
+        return val_str
+        
+        
     def rowCount(self, parent):
         return len(self._data)
 
@@ -77,7 +108,7 @@ class datafileTableModel(qtc.QAbstractTableModel):
             fmt = self._formats[ self._headers[index.column()]]
             val = self._data[index.row()][index.column()]
             try:
-                return f'{fmt_conv_dict[fmt](val)}'
+                return self.get_number_str(val, fmt)
             except:
                 return f'{val}'
         
@@ -109,7 +140,7 @@ class datafileTableModel(qtc.QAbstractTableModel):
             # get the correct format
             fmt = self._formats[ self._headers[index.column()]]
             try:
-                val = fmt_conv_dict[fmt](value)
+                val = self.fmt_conv_dict[fmt](value)
             except:
                 val = value
             self._data[index.row()][index.column()] = val
@@ -175,7 +206,7 @@ class datafileTableModel(qtc.QAbstractTableModel):
                 for i, x in enumerate(d):
                     fmt = self._formats[ self._headers[i] ]
                     try:
-                        val = fmt_conv_dict[fmt](x)
+                        val = self.fmt_conv_dict[fmt](x)
                     except: 
                         if x == '':
                             val = 'No_Entry'
@@ -274,6 +305,9 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
             
         # edit header comments            
         self.action_Edit_Header_Comments.triggered.connect(self.edit_header_comments)
+        
+        # set float display
+        self.actionFloat_Display.triggered.connect(self.set_float_format)
         
         # End main UI code
         self.show()
@@ -433,6 +467,12 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
         dlg.exec()
         if dlg.result():
             self.model._header_comments = dlg.lines
+
+    def set_float_format(self):
+        dlg = FloatDisplayDialog(self.model.float_fmt, self.model.prec)
+        dlg.exec()
+        if dlg.result():  
+            self.model.float_fmt, self.model.prec = dlg.get_values()
 
 
     

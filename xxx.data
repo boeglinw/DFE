@@ -1,0 +1,10 @@
+#\ theta_nq = 15.0
+#\ N = 10.0
+#\ New = True
+#\ Name = pm-distribution
+#\ Theory = JvO
+#! Nr[i, 0]/ p_miss_av[f, 1]/ rho[f, 2]/ 
+0 0.153 4.976 
+1 0.303 1.385 
+2 0.489 0.3033546789 
+3 7.0 0.07752 

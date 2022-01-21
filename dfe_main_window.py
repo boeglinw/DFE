@@ -2,13 +2,11 @@
 
 # Form implementation generated from reading ui file 'dfe_main_window.ui'
 #
-# Created by: PyQt5 UI code generator 5.12.3
+# Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
 
-
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -34,6 +32,8 @@ class Ui_MainWindow(object):
         self.menuRows.setObjectName("menuRows")
         self.menuColumns = QtWidgets.QMenu(self.menubar)
         self.menuColumns.setObjectName("menuColumns")
+        self.menuOptions = QtWidgets.QMenu(self.menubar)
+        self.menuOptions.setObjectName("menuOptions")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -68,6 +68,8 @@ class Ui_MainWindow(object):
         self.actionDuplicate_Row.setObjectName("actionDuplicate_Row")
         self.action_Edit_Header_Comments = QtWidgets.QAction(MainWindow)
         self.action_Edit_Header_Comments.setObjectName("action_Edit_Header_Comments")
+        self.actionFloat_Display = QtWidgets.QAction(MainWindow)
+        self.actionFloat_Display.setObjectName("actionFloat_Display")
         self.menuFile.addAction(self.actionOpen)
         self.menuFile.addAction(self.actionNew)
         self.menuFile.addAction(self.actionSave)
@@ -85,10 +87,12 @@ class Ui_MainWindow(object):
         self.menuColumns.addAction(self.actionAdd_Column_Left)
         self.menuColumns.addSeparator()
         self.menuColumns.addAction(self.actionRemove_Columns)
+        self.menuOptions.addAction(self.actionFloat_Display)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuEdit.menuAction())
         self.menubar.addAction(self.menuRows.menuAction())
         self.menubar.addAction(self.menuColumns.menuAction())
+        self.menubar.addAction(self.menuOptions.menuAction())
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -100,6 +104,7 @@ class Ui_MainWindow(object):
         self.menuEdit.setTitle(_translate("MainWindow", "Edit"))
         self.menuRows.setTitle(_translate("MainWindow", "Rows"))
         self.menuColumns.setTitle(_translate("MainWindow", "Columns"))
+        self.menuOptions.setTitle(_translate("MainWindow", "Options"))
         self.actionOpen.setText(_translate("MainWindow", "Open"))
         self.actionNew.setText(_translate("MainWindow", "New"))
         self.actionSave.setText(_translate("MainWindow", "Save"))
@@ -115,3 +120,5 @@ class Ui_MainWindow(object):
         self.actionSave_As.setText(_translate("MainWindow", "Save As"))
         self.actionDuplicate_Row.setText(_translate("MainWindow", "Duplicate "))
         self.action_Edit_Header_Comments.setText(_translate("MainWindow", "Header Comments"))
+        self.actionFloat_Display.setText(_translate("MainWindow", "Float Display"))
+
