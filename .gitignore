@@ -1,0 +1,5 @@
+*.pyc
+.DS_STORE
+DFE.app
+__pycache__
+*.data
